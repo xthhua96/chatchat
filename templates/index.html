@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <title>ChatBot</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+    <div class="chat-container">
+        <div id="chat-box" class="chat-box">
+            <div class="message bot-message">你好！有什么我可以帮助的？</div>
+        </div>
+        <form id="chat-form">
+            <input type="text" id="user-input" placeholder="输入您的问题..." autocomplete="off">
+            <button type="submit">发送</button>
+        </form>
+    </div>
+
+    <script>
+        const chatForm = document.getElementById('chat-form');
+        const chatBox = document.getElementById('chat-box');
+
+        chatForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const userInput = document.getElementById('user-input').value;
+
+            if (userInput) {
+                // 添加用户消息
+                addMessage(userInput, 'user-message');
+
+                // 清空输入框
+                document.getElementById('user-input').value = '';
+
+                // 向服务器发送请求
+                const response = await fetch('/chat', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+                    body: new URLSearchParams({ "message": userInput })
+                });
+
+                const data = await response.json();
+                addMessage(data.response, 'bot-message');
+            }
+        });
+
+        function addMessage(text, className) {
+            const messageDiv = document.createElement('div');
+            messageDiv.classList.add('message', className);
+            messageDiv.innerText = text;
+            chatBox.appendChild(messageDiv);
+            chatBox.scrollTop = chatBox.scrollHeight;
+        }
+    </script>
+</body>
+</html>
