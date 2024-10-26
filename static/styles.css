@@ -1,67 +1,101 @@
-body {
-    font-family: Arial, sans-serif;
+.container {
     display: flex;
-    justify-content: center;
-    align-items: center;
+}
+
+.history-container {
+    width: 20%;
+    background-color: #f0f0f0; /* 浅灰色背景 */
+    color: black; /* 黑色字体 */
+    padding: 10px;
+    overflow-y: auto;
     height: 100vh;
-    margin: 0;
-    background-color: #f4f4f9;
+}
+
+.history-box {
+    margin-top: 10px;
+}
+
+.history-item {
+    background: rgba(255, 255, 255, 0.5); /* 更浅的背景 */
+    margin-bottom: 10px;
+    padding: 10px;
+    border-radius: 5px;
+    white-space: pre-wrap;
 }
 
 .chat-container {
-    width: 300px;
-    background-color: #fff;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-    border-radius: 8px;
-    overflow: hidden;
+    width: 40%; /* 适当的宽度 */
     display: flex;
     flex-direction: column;
+    padding: 10px;
+    margin: 0 auto; /* 自动左右间距使其居中 */
+    height: 100vh; /* 设置高度 */
 }
 
 .chat-box {
-    padding: 20px;
-    height: 400px;
+    flex: 1;
     overflow-y: auto;
-    border-bottom: 1px solid #ddd;
+    border: none; /* 去掉边框 */
+    padding: 10px;
+    margin-bottom: 10px;
 }
 
 .message {
-    padding: 8px;
-    border-radius: 5px;
-    margin-bottom: 8px;
+    display: flex;
+    align-items: center; /* 垂直居中 */
+    margin-bottom: 10px;
 }
 
-.user-message {
-    background-color: #e1ffc7;
-    align-self: flex-end;
+.message-text {
+    max-width: 60%;
+}
+
+.avatar {
+    width: 40px; /* 头像宽度 */
+    height: 40px; /* 头像高度 */
+    border-radius: 50%; /* 圆形头像 */
+    margin-right: 10px; /* 头像与消息的间距 */
 }
 
 .bot-message {
-    background-color: #d1d1d1;
-    align-self: flex-start;
-}
-
-#chat-form {
-    display: flex;
+    background-color: #e1ffc7;
     padding: 10px;
-    border-top: 1px solid #ddd;
+    border-radius: 5px;
 }
 
-#user-input {
+.user-message {
+    background-color: #c7dfff;
+    padding: 10px;
+    border-radius: 5px;
+    justify-content: flex-end; /* 内容右对齐 */
+}
+
+.user-message .avatar {
+    order: 1; /* 将头像放在右边 */
+    margin-left: 10px; /* 头像与消息的间距 */
+    margin-right: 0; /* 取消右侧间距 */
+}
+
+form {
+    display: flex;
+    position: fixed; /* 固定输入框 */
+    bottom: 10px; /* 距离底部为 10px */
+    width: 40%; /* 输入框宽度与聊天区域相同 */
+    background-color: #fff; /* 输入框背景颜色 */
+    padding: 10px; /* 输入框内边距 */
+}
+
+form input {
     flex: 1;
-    padding: 8px;
-    font-size: 14px;
-    border: 1px solid #ddd;
-    border-radius: 4px;
-    outline: none;
+    padding: 10px;
+    margin-right: 10px;
+    border-radius: 20px; /* 椭圆形边角 */
+    border: 1px solid #ccc; /* 边框样式 */
+    outline: none; /* 去掉输入框获得焦点时的外部轮廓 */
+    background-color: #f9f9f9; /* 可选，添加背景颜色 */
 }
 
-button {
-    padding: 8px 16px;
-    margin-left: 5px;
-    background-color: #28a745;
-    color: white;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
+form button {
+    padding: 10px;
+    border-radius: 20px; /* 椭圆形边角 */
 }

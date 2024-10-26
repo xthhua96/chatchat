@@ -2,40 +2,68 @@
 <html lang="zh">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ChatBot</title>
+    <link rel="icon" href="{{ url_for('static', filename='images/bottts_1.png') }}" type="image/x-icon">
     <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 </head>
 <body>
-    <div class="chat-container">
-        <div id="chat-box" class="chat-box">
-            <div class="message bot-message">你好！有什么我可以帮助的？</div>
+    <div class="container">
+        <div class="history-container">
+            <div class="history-box">
+                <div class="history-item">昨天: 你好，我能帮你什么？</div>
+                <div class="history-item">今天: 请告诉我关于你们的服务。</div>
+            </div>
         </div>
-        <form id="chat-form">
-            <input type="text" id="user-input" placeholder="输入您的问题..." autocomplete="off">
-            <button type="submit">发送</button>
-        </form>
+        <div class="chat-container">
+            <div id="chat-box" class="chat-box">
+                <div class="message bot-message">
+                    <img src="{{ url_for('static', filename='images/bottts_1.png') }}" alt="Bot Avatar" class="avatar">
+                    你好！有什么我可以帮助的？
+                </div>
+            </div>
+            <form id="chat-form">
+                <textarea id="user-input" placeholder="输入您的问题..." autocomplete="off" 
+                    style="flex: 1; padding: 10px; margin-right: 10px; border-radius: 20px; border: none; outline: none; background-color: #f9f9f9; width: calc(100% - 40px); resize: none; overflow-y: hidden;" rows="1"></textarea>
+                <button type="submit" style="position: absolute; right: 20px; top: 50%; transform: translateY(-50%); border: none; background: none; cursor: pointer;">
+                    <i class="fas fa-paper-plane"></i>
+                </button>
+            </form>
+        </div>
     </div>
 
     <script>
         const chatForm = document.getElementById('chat-form');
         const chatBox = document.getElementById('chat-box');
+        const userInput = document.getElementById('user-input');
+        const botAvatar = "{{ url_for('static', filename='images/bottts_1.png') }}";
+        const userAvatar = "{{ url_for('static', filename='images/adventurer_male.png') }}";
+
+        // 添加回车键监听器
+        userInput.addEventListener('keypress', function (e) {
+            if (e.key === 'Enter') {
+                e.preventDefault();  // 阻止默认的换行行为
+                chatForm.dispatchEvent(new Event('submit'));  // 触发表单提交事件
+            }
+        });
 
         chatForm.addEventListener('submit', async (e) => {
             e.preventDefault();
-            const userInput = document.getElementById('user-input').value;
+            const userInputText = userInput.value;
 
-            if (userInput) {
+            if (userInputText) {
                 // 添加用户消息
-                addMessage(userInput, 'user-message');
+                addMessage(userInputText, 'user-message');
 
                 // 清空输入框
-                document.getElementById('user-input').value = '';
+                userInput.value = '';
 
                 // 向服务器发送请求
                 const response = await fetch('/chat', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-                    body: new URLSearchParams({ "message": userInput })
+                    body: new URLSearchParams({ "message": userInputText })
                 });
 
                 const data = await response.json();
@@ -46,7 +74,10 @@
         function addMessage(text, className) {
             const messageDiv = document.createElement('div');
             messageDiv.classList.add('message', className);
-            messageDiv.innerText = text;
+            const avatar = className === 'bot-message' ? 
+                `<img src="${botAvatar}" alt="Bot Avatar" class="avatar">` : 
+                `<img src="${userAvatar}" alt="User Avatar" class="avatar" style="order: 1; margin-left: 10px; margin-right: 0;">`;
+            messageDiv.innerHTML = avatar + `<span class="message-text">${text}</span>`;
             chatBox.appendChild(messageDiv);
             chatBox.scrollTop = chatBox.scrollHeight;
         }
