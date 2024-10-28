@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+    <style>
+        body, html {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-family: Arial, sans-serif;
+        }
+        .form-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            flex-direction: column;
+            text-align: center;
+        }
+        form {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        form input {
+            margin-bottom: 10px;
+            width: 200px; /* Optional: to set a fixed width for the inputs */
+        }
+    </style>
+</head>
+<body>
+    <div class="form-container">
+        <h1>注册</h1>
+        <form method="POST">
+            {{ form.hidden_tag() }}
+            {{ form.username.label }} {{ form.username(size=32) }}<br>
+            {{ form.password.label }} {{ form.password(size=32) }}<br>
+            {{ form.submit() }}
+        </form>
+        <a href="{{ url_for('login') }}">已经有账户了？登录</a>
+    </div>
+</body>
+</html>

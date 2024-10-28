@@ -1,7 +1,17 @@
+/* 确保全局样式不会影响特定页面布局 */
+body, html {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    font-family: Arial, sans-serif;
+}
+
+/* 全局容器样式 */
 .container {
     display: flex;
 }
 
+/* 历史记录容器样式 */
 .history-container {
     width: 20%;
     background-color: #f0f0f0; /* 浅灰色背景 */
@@ -23,6 +33,7 @@
     white-space: pre-wrap;
 }
 
+/* 聊天容器样式 */
 .chat-container {
     width: 40%; /* 适当的宽度 */
     display: flex;
@@ -76,6 +87,7 @@
     margin-right: 0; /* 取消右侧间距 */
 }
 
+/* 表单样式 */
 form {
     display: flex;
     position: fixed; /* 固定输入框 */
@@ -98,4 +110,34 @@ form input {
 form button {
     padding: 10px;
     border-radius: 20px; /* 椭圆形边角 */
+}
+
+/* 登录和注册页面样式 */
+.form-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    flex-direction: column;
+    text-align: center;
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+form input[type="text"], form input[type="password"] {
+    margin-bottom: 10px;
+    width: 200px; /* Optional: to set a fixed width for the inputs */
+}
+
+a {
+    text-decoration: none;
+    color: #007bff;
+}
+
+a:hover {
+    text-decoration: underline;
 }

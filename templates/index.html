@@ -10,6 +10,16 @@
 </head>
 <body>
     <div class="container">
+        <nav>
+            <a href="{{ url_for('home') }}">Home</a>
+            {% if current_user.is_authenticated %}
+                <a href="{{ url_for('dashboard') }}">Dashboard</a>
+                <a href="{{ url_for('logout') }}">Logout</a>
+            {% else %}
+                <a href="{{ url_for('register') }}">Register</a>
+                <a href="{{ url_for('login') }}">Login</a>
+            {% endif %}
+        </nav>
         <div class="history-container">
             <div class="history-box">
                 <div class="history-item">昨天: 你好，我能帮你什么？</div>
